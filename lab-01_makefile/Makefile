@@ -1,4 +1,4 @@
-lab-01_makefile: obj main.o io.o algorithm.o util.o ./include/algorithm.h ./include/io.h ./include/util.h
+lab-01_makefile: obj main.o io.o algorithm.o util.o 
 	gcc -o lab-01_makefile ./obj/algorithm.o ./obj/util.o ./obj/main.o ./obj/io.o 
 obj:
 	mkdir obj
