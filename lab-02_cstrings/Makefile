@@ -14,3 +14,7 @@ obj/test_str.o: include/test_str.h src/test_str.c
 
 obj/test.o: include/test_str.h src/test.c 
 	gcc -I ./include $(CCFLAGS) -c -o ./obj/test.o ./src/test.c
+
+clean:
+	rm -r obj
+	rm lab-02_cstrings
