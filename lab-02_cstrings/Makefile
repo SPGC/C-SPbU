@@ -7,13 +7,13 @@ obj:
 	mkdir obj
 
 obj/str.o: include/str.h src/str.c
-	gcc -I ./include $(CCFLAGS) -c -o ./obj/str.o ./src/str.c
+	gcc -I include $(CCFLAGS) -c -o obj/str.o src/str.c
 
 obj/test_str.o: include/test_str.h src/test_str.c 
-	gcc -I ./include $(CCFLAGS) -c -o ./obj/test_str.o ./src/test_str.c 
+	gcc -I include $(CCFLAGS) -c -o obj/test_str.o src/test_str.c 
 
 obj/test.o: include/test_str.h src/test.c 
-	gcc -I ./include $(CCFLAGS) -c -o ./obj/test.o ./src/test.c
+	gcc -I include $(CCFLAGS) -c -o obj/test.o src/test.c
 
 clean:
 	rm -r obj
