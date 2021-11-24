@@ -15,11 +15,11 @@ size_t my_strlen( const char *s) {
     while (*endOfString != '\0') {
         endOfString++;
     }
-    return endOfString - s;
+    return endOfString - s + 1;
 }
 
 char *my_strcat(char * restrict s1, const char * restrict s2){
-    size_t endOfString = my_strlen(s1);
+    size_t endOfString = my_strlen(s1)-1;
     my_strcpy(s1+endOfString, s2);
     return s1;
 }

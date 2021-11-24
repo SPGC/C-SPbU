@@ -6,10 +6,10 @@
 
 
 void test_strcpy(){
-    char testString1[SIZE_OF_STRINGS] = "Геральт";
-    char testString2[SIZE_OF_STRINGS] = "Цирилла";
-    char testString3[] = "Плотва";
-    char testString4[SIZE_OF_STRINGS] = "Золтан Хивай";
+    char testString1[SIZE_OF_STRINGS] = "Geralt";
+    char testString2[SIZE_OF_STRINGS] = "Cirilla";
+    char testString3[] = "Roach";
+    char testString4[SIZE_OF_STRINGS] = "Zoltan Chivay";
     char empty[] = "";
 
     assert(strcmp(my_strcpy(empty, ""), "") ==  0);
@@ -25,10 +25,10 @@ void test_strlen(){
     char testString4[SIZE_OF_STRINGS] = "Zoltan Chivay";
     char empty[] = "";
 
-    assert(my_strlen(empty) == 0);
-    assert(my_strlen(testString3) == 5);
-    assert(my_strlen(testString1) == 6);
-    assert(my_strlen(testString4) == 13);
+    assert(my_strlen(empty) == 1);
+    assert(my_strlen(testString3) == 6);
+    assert(my_strlen(testString1) == 7);
+    assert(my_strlen(testString4) == 14);
 }
 
 void test_strcmp(){
@@ -47,19 +47,19 @@ void test_strcmp(){
 }
 
 void test_strcat(){
-    char testString0[SIZE_OF_STRINGS] = "Геральт";
-    char testString1[SIZE_OF_STRINGS] = "Геральт";
-    char testString2[SIZE_OF_STRINGS] = "Цирилла";
-    char testString3[] = "Плотва";
-    char testString4[SIZE_OF_STRINGS] = "Золтан Хивай";
+    char testString0[SIZE_OF_STRINGS] = "Geralt";
+    char testString1[SIZE_OF_STRINGS] = "Geralt";
+    char testString2[SIZE_OF_STRINGS] = "Cirilla";
+    char testString3[] = "Roach";
+    char testString4[SIZE_OF_STRINGS] = "Zoltan Chivay";
     char empty[] = "";
 
     assert(strcmp(my_strcat(empty, ""), "") ==  0);
-    assert(strcmp(my_strcat(testString1, testString4), "ГеральтЗолтан Хивай") ==  0);
+    assert(strcmp(my_strcat(testString1, testString4), "GeraltZoltan Chivay") ==  0);
     my_strcpy(testString1, testString0);
-    assert(strcmp(my_strcat(testString1, testString2), "ГеральтЦирилла") ==  0);
+    assert(strcmp(my_strcat(testString1, testString2), "GeraltCirilla") ==  0);
     my_strcpy(testString1, testString0);
-    assert(strcmp(my_strcat(testString1, testString3), "ГеральтПлотва") ==  0);    
+    assert(strcmp(my_strcat(testString1, testString3), "GeraltRoach") ==  0);    
     my_strcpy(testString1, testString0);
-    assert(strcmp(my_strcat(testString1, ""), "Геральт") ==  0);
+    assert(strcmp(my_strcat(testString1, ""), "Geralt") ==  0);
 }
