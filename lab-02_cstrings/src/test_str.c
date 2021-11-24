@@ -32,19 +32,18 @@ void test_strlen(){
 }
 
 void test_strcmp(){
-    char testString1[SIZE_OF_STRINGS] = "Геральт";
-    char testString2[SIZE_OF_STRINGS] = "Цирилла";
-    char testString3[] = "Плотва";
-    char testString4[SIZE_OF_STRINGS] = "Золтан Хивай";
+    char testString1[SIZE_OF_STRINGS] = "Geralt";
+    char testString2[SIZE_OF_STRINGS] = "Cirilla";
+    char testString3[] = "Roach";
+    char testString4[SIZE_OF_STRINGS] = "Zoltan Chivay";
     char empty[] = "";
     
     assert(my_strcmp(empty, "") == 0);
     assert(my_strcmp(testString4, testString4) == 0);
     assert(my_strcmp(testString4, testString1) > 0);
-    assert(my_strcmp(testString1, testString2) < 0);
-    assert(my_strcmp(testString1, testString3) > 0);
-    assert(my_strcmp(testString2, testString1) > 0);
-    
+    assert(my_strcmp(testString1, testString2) > 0);
+    assert(my_strcmp(testString1, testString3) < 0);
+    assert(my_strcmp(testString2, testString1) < 0);
 }
 
 void test_strcat(){
