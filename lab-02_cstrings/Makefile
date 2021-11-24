@@ -1,7 +1,7 @@
 CCFLAGS = -Wall -Werror -Wextra
 
 lab-02_cstrings: obj obj/str.o obj/test_str.o obj/test.o
-	gcc $(CCFLAGS) -o lab-02_cstring obj/str.o obj/test_str.o obj/test.o
+	gcc $(CCFLAGS) -o lab-02_cstrings obj/str.o obj/test_str.o obj/test.o
 
 obj: 
 	mkdir obj
