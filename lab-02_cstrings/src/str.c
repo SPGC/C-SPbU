@@ -1,4 +1,4 @@
-#include <str.h>
+#include "str.h"
 
 char *my_strcpy(char * restrict s1, const char * restrict s2){
     int i = -1;
@@ -9,11 +9,11 @@ char *my_strcpy(char * restrict s1, const char * restrict s2){
 size_t my_strlen( const char *s) {
     int sizeOfString = 0;
     while(*(s + sizeOfString++));
-    return sizeOfString;
+    return sizeOfString-1;
 }
 
 char *my_strcat(char * restrict s1, const char * restrict s2){
-    size_t endOfString = my_strlen(s1)-1;
+    size_t endOfString = my_strlen(s1);
     my_strcpy(s1 + endOfString, s2);
     return s1;
 }

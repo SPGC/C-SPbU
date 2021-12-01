@@ -1,6 +1,6 @@
 #include "str.h"
 #include <assert.h>
-#include <test_str.h>
+#include "test_str.h"
 #include <string.h>
 #define SIZE_OF_STRINGS 20
 
@@ -29,10 +29,10 @@ void test_strlen(){
     char testString4[SIZE_OF_STRINGS] = "Zoltan Chivay";
     char empty[] = "";
 
-    assert(my_strlen(empty) == 1);
-    assert(my_strlen(testString3) == 6);
-    assert(my_strlen(testString1) == 7);
-    assert(my_strlen(testString4) == 14);
+    assert(my_strlen(empty) == 0);
+    assert(my_strlen(testString3) == 5);
+    assert(my_strlen(testString1) == 6);
+    assert(my_strlen(testString4) == 13);
 }
 
 void test_strcmp(){

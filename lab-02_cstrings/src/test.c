@@ -1,5 +1,4 @@
 #include <test_str.h>
-#include <str.h>
 
 int main(){
     test_strlen();
