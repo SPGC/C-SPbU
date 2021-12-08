@@ -1,7 +1,10 @@
-#include "clist.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "clist.h"
+
+
 #define MAXINPUTLENGTH 239
 
 typedef struct point point;

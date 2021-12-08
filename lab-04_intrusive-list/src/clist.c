@@ -1,5 +1,7 @@
-#include "clist.h"
 #include <stdlib.h>
+
+#include "clist.h"
+
 
 // Начальная инициализация списка
 void init_list(intrusive_list *new_list){
