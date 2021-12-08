@@ -1,7 +1,9 @@
-#include "mergesort.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "mergesort.h"
+
 
 // Метод сравнения для int
 int integerComparator(const void *element1, const void *element2){

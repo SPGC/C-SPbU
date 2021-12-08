@@ -1,5 +1,7 @@
-#include "mergesort.h"
 #include <stdlib.h>
+
+#include "mergesort.h"
+
 
 // Производит слияние массивов left и right в массив resultArray. leftSize, rightSize - длинны соответствующих массивов
 // elementSize - размер элементов массива в байтах, cmp - метод сравнения двух элементов.
