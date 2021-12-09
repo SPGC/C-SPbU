@@ -25,19 +25,17 @@ void add_point(intrusive_list *list, int x, int y) {
 // Выводит в терминал всё содержимое списка list
 void show_all_points(intrusive_list *list) {
     int length_of_list = get_length(list);
-    if (length_of_list == 0){
-        printf("\n");
-        return;
-    }
     point *current_point;
     intrusive_node *current_node = list->head;
-    for(int i = 0; i < length_of_list - 1; i++){
+    for(int i = 0; i < length_of_list; i++){
+        if(i){
+            printf(" ");
+        }
         current_point = container_of(current_node, point, node);
-        printf("(%d %d) ", current_point->x, current_point->y);
+        printf("(%d %d)", current_point->x, current_point->y);
         current_node = current_node->next;
     }
-    current_point = container_of(current_node, point, node);
-    printf("(%d %d)\n", current_point->x, current_point->y);
+    printf("\n");
 }
 
 // Удаляет из списка list все тчоки с координатами (x,y)
@@ -47,12 +45,10 @@ void remove_point(intrusive_list *list, int x, int y) {
     int length_of_list = get_length(list);
     for(int i = 0; i < length_of_list; i++){
         current_point = container_of(current_node, point, node);
+        current_node = current_node->next;
         if(current_point->x == x && current_point->y == y){
-            remove_node(list, current_node);
-            current_node = current_node->next;
+            remove_node(list, current_node->prev);
             free(current_point);
-        } else {
-            current_node = current_node->next;
         }
     } 
 }
@@ -64,10 +60,10 @@ void remove_all_points(intrusive_list *list) {
     intrusive_node *current_node = list->head;
     for(int i = 0; i < length_of_list; i++){
         current_point = container_of(current_node, point, node);
-        remove_node(list, current_node);
         current_node = current_node->next;
         free(current_point);
     } 
+    init_list(list);
 }
 
 int main() {

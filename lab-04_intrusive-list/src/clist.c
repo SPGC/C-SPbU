@@ -3,6 +3,22 @@
 #include "clist.h"
 
 
+// Устанавливает связи ноды current с нодами prev и next
+// Если current == NULL, то устанавливает связь prev и current
+void setConnections(intrusive_node *prev, intrusive_node *current,
+                    intrusive_node *next){
+    if(current){
+        current->prev = prev;
+        current->next = next;
+        prev->next = current;
+        next->prev = current;
+        
+    } else {
+        prev->next = next;
+        next->prev = prev;
+    }
+}
+
 // Начальная инициализация списка
 void init_list(intrusive_list *new_list){
     new_list->head = NULL;
@@ -14,32 +30,24 @@ void init_list(intrusive_list *new_list){
 void add_node(intrusive_list *list, intrusive_node *new_node){
     if (!list->head){
         list->head = new_node;
-        list->head->next = list->head;
-        list->head->prev = list->head;
+        setConnections(list->head, list->head, list->head);
         return;
     }
-    new_node->prev = list->head->prev;
-    new_node->next = list->head;
-    list->head->prev->next = new_node;
-    list->head->prev = new_node;
+    setConnections(list->head->prev, new_node, list->head);
     list->head = new_node;
     return;
 }
 
 // Удаляет ноду deleted_node из списка list
 void remove_node(intrusive_list *list, intrusive_node *deleted_node){
-    if(deleted_node == list->head){
-        if(deleted_node->next == deleted_node){
+    if(deleted_node->next == deleted_node){
             list->head = NULL;
             return;
         }
-        list->head->prev->next = list->head->next;
-        list->head->next->prev = list->head->prev;
-        list->head = list->head->next;
-        return;
+    setConnections(deleted_node->prev, NULL, deleted_node->next);
+    if(deleted_node == list->head){
+        list->head = deleted_node->next;
     }
-    deleted_node->prev->next = deleted_node->next;
-    deleted_node->next->prev = deleted_node->prev;
     return;
 }
 
