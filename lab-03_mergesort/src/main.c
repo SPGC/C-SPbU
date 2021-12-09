@@ -4,6 +4,8 @@
 
 #include "mergesort.h"
 
+typedef void (*printer)(const void *);  
+typedef void (*parser)(void *, size_t, const char **); 
 
 // Метод сравнения для int
 int integerComparator(const void *element1, const void *element2){
@@ -18,6 +20,66 @@ int charComparator(const void *element1, const void *element2){
 // Метод сравнения для string
 int stringComparator(const void *element1, const void *element2){
     return strcmp(*(char**) element1, *(char**) element2);
+}
+
+// Метод печати int
+void printInteger(const void *pointer){
+    printf("%d", *(int*) pointer );
+}
+
+// Метод печати char
+void printChar(const void *pointer){
+    printf("%c", *(char*) pointer );
+}
+
+// Метод печати string
+void printString(const void *pointer){
+    printf("%s", *(char**) pointer );
+}
+
+// Метод, парсящий массив строк parsingArray в массив int parsedArray
+// arraySize - размер массива parsingArray
+void parseArrToInts(void *parsedArray, size_t arraySize, char **parsingArray){
+    for(int i = 0; (size_t) i < arraySize; i++){
+            ((int*) parsedArray)[i] = atoi(parsingArray[i]);
+        }
+}
+
+// Метод, парсящий массив строк parsingArray в массив char parsedArray
+// arraySize - размер массива parsingArray
+void parseArrToChar(void *parsedArray, size_t arraySize, char **parsingArray){
+    for(int i = 0; (size_t) i < arraySize; i++){
+            ((char*) parsedArray)[i] = parsingArray[i][0];
+        }
+}
+
+// Метод, копирующий массив строк sourceArray в массив distArray
+// arraySize - размер массива sourceArray
+void cpyStringArray(void *distArray, size_t arraySize, char **sourceArray){
+    for(int i = 0; (size_t) i < arraySize; i++){
+            ((char**) distArray)[i] = sourceArray[i];
+        }
+}
+
+// Метод, сортирующий массив array и выводящий полученное значение в терминал. 
+// arraySize - размер входного массива
+// elemetSize - размер элемента массива, 
+// comparator - метод сравнения 2-х элементов
+// printer - метод вывода элемента в терминал
+int sortAndPrint(void *array, size_t arraySize, size_t elementSize, 
+                  comparator comparator, printer printer){
+    if(mergeSort(array, arraySize, elementSize, comparator) == -1){
+        printf("Error: memory allocation failed\n");
+        return -1;
+    }
+    for(int i = 0; (size_t) i < arraySize; i++){
+        if(i){
+            printf(" ");
+        }
+        printer(array + i * elementSize);
+    }
+    printf("\n");
+    return 0;
 }
 
 int main(int argc, char* argv[]){
@@ -40,55 +102,24 @@ int main(int argc, char* argv[]){
     void *array = malloc(elementSize * arraySize);
     if(array == NULL){
         printf("Error: memory allocation failed\n");
-        free(array);
         return -1;
     }
+    int succesFlag;
     switch (elementSize)
     {
     case sizeof(int):
-        for(int i = 0; (size_t) i < arraySize; i++){
-            ((int*) array)[i] = atoi(argv[i + 2]);
-        }
-        if(mergeSort(array, arraySize, elementSize, integerComparator) == -1){
-            printf("Error: memory allocation failed\n");
-            return -1;
-        }
-        for(int i = 0; (size_t) i < arraySize - 1; i++){
-            printf("%d ", ((int*) array)[i]);
-        }
-        printf("%d", ((int*) array)[arraySize - 1]);
-        printf("\n");
-        free(array);
-    return 0;
+        parseArrToInts(array, arraySize, argv + 2);
+        succesFlag = sortAndPrint(array, arraySize, elementSize, integerComparator, printInteger);
+        break;
     case sizeof(char):
-        for(int i = 0; (size_t) i < arraySize; i++){
-            ((char*) array)[i] = argv[i + 2][0];
-        }
-        if(mergeSort(array, arraySize, elementSize, charComparator) == -1){
-            printf("Error: memory allocation failed\n");
-            return -1;
-        }
-        for(int i = 0; (size_t) i < arraySize - 1; i++){
-            printf("%c ", ((char*) array)[i]);
-        }
-        printf("%c", ((char*) array)[arraySize - 1]);
-        printf("\n");
-        free(array);
-    return 0;
+        parseArrToChar(array, arraySize, argv + 2);
+        succesFlag = sortAndPrint(array, arraySize, elementSize, charComparator, printChar);
+        break;
     case sizeof(char*):
-        for(int i = 0; (size_t) i < arraySize; i++){
-            ((char**) array)[i] = argv[i + 2];
-        }
-        if(mergeSort(array, arraySize, elementSize, stringComparator) == -1){
-            printf("Error: memory allocation failed\n");
-            return -1;
-        }
-        for(int i = 0; (size_t) i < arraySize - 1; i++){
-            printf("%s ", ((char**) array)[i]);
-        }
-        printf("%s", ((char**) array)[arraySize - 1]);
-        printf("\n");
-        free(array);
-    return 0;
+        cpyStringArray(array, arraySize, argv + 2);
+        succesFlag = sortAndPrint(array, arraySize, elementSize, stringComparator, printString);  
+        break;
     }
+    free(array);
+    return succesFlag;
 }
