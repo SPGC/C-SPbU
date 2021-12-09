@@ -67,8 +67,8 @@ void remove_all_points(intrusive_list *list) {
 }
 
 int main() {
-    intrusive_list *list = malloc(sizeof(intrusive_list));
-    init_list(list);
+    intrusive_list list;
+    init_list(&list);
     char input[MAXINPUTLENGTH];
     int exit_flag = 0;
     while(1){
@@ -79,7 +79,7 @@ int main() {
                 int x;
                 int y;
                 scanf("%d%d", &x, &y);
-                add_point(list, x, y);
+                add_point(&list, x, y);
             } else {
                 printf("Unknown command\n");
             }
@@ -89,23 +89,23 @@ int main() {
                 int x;
                 int y;
                 scanf("%d%d", &x, &y);
-                remove_point(list, x, y);
+                remove_point(&list, x, y);
             } else if(!strcmp(input, "rma")){
-                remove_all_points(list);
+                remove_all_points(&list);
             } else {
                 printf("Unknown command\n");
             }
             break;
         case 'p':
             if(!strcmp(input, "print")){
-                show_all_points(list);
+                show_all_points(&list);
             } else {
                 printf("Unknown command\n");
             }
             break;
         case 'l':
             if(!strcmp(input, "len")){
-                printf("%d\n", get_length(list));
+                printf("%d\n", get_length(&list));
             } else {
                 printf("Unknown command\n");
             }
@@ -125,6 +125,5 @@ int main() {
             break;
         }
     }
-    remove_all_points(list);
-    free(list);
+    remove_all_points(&list);
 }
