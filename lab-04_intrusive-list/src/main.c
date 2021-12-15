@@ -15,25 +15,31 @@ struct point {
 };
 
 // Добавляет в список list точку с координатами x, y
-void add_point(intrusive_list *list, int x, int y) {
+int add_point(intrusive_list *list, int x, int y) {
     point *new_point = malloc(sizeof(point));
+    if(!new_point){
+        printf("Error: memory allocation failed\n");
+        return -1;
+    }
     new_point->x = x;
     new_point->y = y;
     add_node(list, &(new_point->node));
+    return 0;
 }
 
 // Выводит в терминал всё содержимое списка list
 void show_all_points(intrusive_list *list) {
-    int length_of_list = get_length(list);
     point *current_point;
     intrusive_node *current_node = list->head;
-    for(int i = 0; i < length_of_list; i++){
-        if(i){
-            printf(" ");
-        }
-        current_point = container_of(current_node, point, node);
-        printf("(%d %d)", current_point->x, current_point->y);
-        current_node = current_node->next;
+    if (current_node){
+        do{
+            if(current_node != list->head){
+                printf(" ");
+            }
+            current_point = container_of(current_node, point, node);
+            printf("(%d %d)", current_point->x, current_point->y);
+            current_node = current_node->next;
+        } while (current_node != list->head);
     }
     printf("\n");
 }
@@ -79,7 +85,9 @@ int main() {
                 int x;
                 int y;
                 scanf("%d%d", &x, &y);
-                add_point(&list, x, y);
+                if(add_point(&list, x, y)){
+                    return -1;
+                }
             } else {
                 printf("Unknown command\n");
             }
