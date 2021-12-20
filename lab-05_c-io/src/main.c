@@ -96,13 +96,13 @@ void write_text(intrusive_node* node, void* output) {
 // Преобразование integer в три байта, значения четвертого байта отбрасываются
 void int_to_bin(const int n, unsigned char* const binary) {
     for (int i = 0; i < 3; i++) {
-        binary[i] = (unsigned char)((n >> (8 * i)) & 0xFF);
+        binary[i] = (unsigned char)((n >> (8 * i)));
     }
 }
 
 // Запись бинарного файла
 // list - список с данными
-// output - выходной файл
+// output - выходной файл 
 void write_bin(intrusive_node *node, void* output) {
     point* writing_point = container_of(node, point, node);  
     unsigned char result[3];
