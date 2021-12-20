@@ -121,7 +121,6 @@ int main(int argc, char** argv) {
     int reader_flag;
     if (strcmp(argv[1], "loadtext") == 0) {
         reader_flag = file_reader("r", argv[2], &list, text_reader);
-
     } else if (strcmp(argv[1], "loadbin") == 0) {
         reader_flag = file_reader("rb", argv[2], &list, bin_reader);
     } else {
