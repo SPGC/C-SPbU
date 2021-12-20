@@ -96,7 +96,7 @@ void write_text(intrusive_node* node, void* output) {
 // Преобразование integer в три байта, значения четвертого байта отбрасываются
 void int_to_bin(const int n, unsigned char* const binary) {
     for (int i = 0; i < 3; i++) {
-        binary[i] = (unsigned char)((n >> (8 * i)));
+        binary[i] = (unsigned char)((n >> (8 * i)) & 0x8F);
     }
 }
 
