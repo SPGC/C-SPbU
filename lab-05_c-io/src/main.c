@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
         return -1;
     }
     if (strcmp(argv[3], "savetext") == 0) {
-        return file_writer("wb", write_bin, &list, argv[4]);
+        return file_writer("w", write_text, &list, argv[4]);
     } else if (strcmp(argv[3], "savebin") == 0) {
         return file_writer("wb", write_bin, &list, argv[4]);
     } else if (strcmp(argv[3], "print") == 0) {
