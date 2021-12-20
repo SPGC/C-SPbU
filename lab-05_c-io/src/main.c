@@ -42,7 +42,7 @@ int text_reader(FILE *file, intrusive_list *list){
 int parse_int(const unsigned char* binary) {
     int result = 0;
     for (int i = 0; i < 3; i++) {
-        result |= ((int)binary[i]) >> (8 * i);
+        result |= ((int)binary[i]) << (8 * i);
     }
     if (binary[2] & 0x80) {
         result |= 0xFF000000;
