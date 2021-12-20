@@ -113,7 +113,8 @@ void write_bin(intrusive_node *node, void* output) {
 }
 
 int main(int argc, char** argv) {
-    if (argc < 3 || argc > 5){
+    printf("%d\n", argc);
+    if (argc < 4 || argc > 6){
         return -1;
     }
     intrusive_list list;
