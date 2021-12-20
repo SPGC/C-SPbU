@@ -5,11 +5,14 @@
 
 // Реализация foreach для intrusive_list
 void apply(intrusive_list *list, operation op, void* data) {
-  intrusive_node* current_node = list->head->prev;
-  do {
-    current_node = current_node->next;
-    op(current_node, data);
-  } while (current_node->next != list->head);
+    if(!list->head){
+        return;
+    }
+    intrusive_node* current_node = list->head->prev;
+    do {
+        current_node = current_node->next;
+        op(current_node, data);
+    } while (current_node->next != list->head);
 }
 
 // Устанавливает связи ноды current с нодами prev и next
