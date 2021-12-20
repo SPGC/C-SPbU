@@ -18,16 +18,15 @@ int add_point(intrusive_list *list, int x, int y) {
     return 0;
 }
 
+void remove_point(intrusive_node *deleting_node, void *data){
+    data = data;
+    point *current_point = container_of(deleting_node, point, node);
+    free(current_point);
+}
+
 // Удаляет всё содержимое списка list
 void remove_all_points(intrusive_list *list) {
-    int length_of_list = get_length(list);
-    point *current_point;
-    intrusive_node *current_node = list->head;
-    for(int i = 0; i < length_of_list; i++){
-        current_point = container_of(current_node, point, node);
-        current_node = current_node->next;
-        free(current_point);
-    } 
+    apply(list, remove_point, NULL);
     init_list(list);
 }
 
