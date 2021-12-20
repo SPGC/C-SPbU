@@ -60,7 +60,7 @@ int bin_reader(FILE *file, intrusive_list *list){
         x = parse_int(&input_data[0]);
         y = parse_int(&input_data[3]);
         flag = add_point(list, x, y);
-        if(!flag){
+        if(flag){
             return -1;
         }
     } 
@@ -76,15 +76,17 @@ int file_writer(const char *fmt, operation op, intrusive_list *list,
                  const char *output_name){
     FILE* output = fopen(output_name, fmt);
     if(!output){
+        remove_all_points(list);
         return -1;
     }
     apply(list, op, (void*)output);
     fclose(output);
+    remove_all_points(list);
     return 0;
 }
 
 // Запись текстового файла
-// list - список с данными
+// node - записываемая нода
 // output - выходной файл
 void write_text(intrusive_node* node, void* output) {
     point* writing_point = container_of(node, point, node);
@@ -129,15 +131,9 @@ int main(int argc, char** argv) {
         return -1;
     }
     if (strcmp(argv[3], "savetext") == 0) {
-        if(file_writer("w", write_text, &list, argv[4])){
-            remove_all_points(&list);
-            return -1;   
-        }
+        return file_writer("wb", write_bin, &list, argv[4]);
     } else if (strcmp(argv[3], "savebin") == 0) {
-        if(file_writer("wb", write_bin, &list, argv[4])){
-            remove_all_points(&list);
-            return -1;  
-        }
+        return file_writer("wb", write_bin, &list, argv[4]);
     } else if (strcmp(argv[3], "print") == 0) {
         apply(&list, print_point, argv[4]);
         printf("\n");
