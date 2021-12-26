@@ -19,18 +19,28 @@ int main(int argc, char *argv[]){
         return -1;
     }
     Bitmap *bmp = loadBitmap(inputFile);
+    if(!bmp){
+        return -1;
+    }
     int result;
     result = crop(bmp, xStart, yStart, width, height);
     if(result){
+        printf("Dead1");
         bmpDestructor(bmp);
         return -1;
     }
     result = rotate(bmp);
     if(result){
+        printf("Dead2");
         bmpDestructor(bmp);
         return -1;
     }
-    result = saveBitmap(outputFile, bmp);
+    FILE * output = fopen(outputFile, "wb");
+    if(!output){
+        return -1;
+    }
+    result = saveBitmap(output, bmp);
+    fclose(output);
     bmpDestructor(bmp);
     return result;
 

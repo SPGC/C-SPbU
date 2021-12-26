@@ -47,7 +47,7 @@ void bmpDestructor(Bitmap *);
 
 Bitmap *loadBitmap(const char *);
 
-int saveBitmap(const char *, Bitmap *);
+int saveBitmap(FILE *, Bitmap *);
 
 int rotate(Bitmap *);
 

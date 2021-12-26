@@ -122,13 +122,7 @@ Bitmap *loadBitmap(const char *inputFile){
     return img;
 }
 
-int saveBitmap(const char *outputFile, Bitmap *img){
-    if (!img)
-        return 1;
-    FILE *file = fopen(outputFile, "wb");
-    if (!file){
-        return 1;
-    }
+int saveBitmap(FILE *file, Bitmap *img){
     if (!fwrite(img->header, sizeof(bmpHeader), 1, file)){
         fclose(file);
         return 1;
@@ -139,20 +133,15 @@ int saveBitmap(const char *outputFile, Bitmap *img){
     fseek(file, img->header->offBits, SEEK_SET);
     for (int i = height - 1; i >= 0; i--){
         if ((int) fwrite(img->data[i], sizeof(pixel), width, file) != width){
-            fclose(file);
             return 1;
         }
         for (int j = 0; j < shift; ++j)
             putc('\0', file);
     }
-    fclose(file);
     return 0;
 }
 
 int crop(Bitmap *img, int xStart, int yStart, int width, int height){
-    if (!img){
-        return -1;
-    }
     pixel **data = (pixel **)arrayConstructor(sizeof(pixel), height, width);
     if (!data){
         return -1;
@@ -172,22 +161,15 @@ int crop(Bitmap *img, int xStart, int yStart, int width, int height){
 }
 
 int rotate(Bitmap *img){
-    if (!img){
-        return -1;
-    }
-    int width;
-    int widthRot;
-    int height;
-    int heightRot;
-    widthRot = height = img->header->height;
-    heightRot = width = img->header->width;
+    int widthRot = img->header->height;;
+    int heightRot = img->header->width;
     pixel **data = (pixel **)arrayConstructor(sizeof(pixel), heightRot, widthRot);
     if (!data){
         return -1;
     }
     for (int i = 0; i < heightRot; ++i){
         for (int j = 0; j < widthRot; ++j){
-            data[i][j] = img->data[height - 1 - j][i];
+            data[i][j] = img->data[widthRot - 1 - j][i];
         }
     }
     bmpHeader *header = headerConstructor(img->header, widthRot, heightRot);
