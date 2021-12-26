@@ -25,13 +25,11 @@ int main(int argc, char *argv[]){
     int result;
     result = crop(bmp, xStart, yStart, width, height);
     if(result){
-        printf("Dead1");
         bmpDestructor(bmp);
         return -1;
     }
     result = rotate(bmp);
     if(result){
-        printf("Dead2");
         bmpDestructor(bmp);
         return -1;
     }
