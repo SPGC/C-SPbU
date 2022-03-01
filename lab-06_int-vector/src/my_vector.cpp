@@ -1,9 +1,8 @@
+#include "my_vector.hpp"
+
 #include <cstdlib>
 #include <stdexcept>    
 #include <cstring>
-
-#include "my_vector.hpp"
-
 
 MyVector::MyVector(){
     _capacity = 2;
@@ -36,7 +35,7 @@ MyVector::MyVector(const MyVector& vector){
 MyVector& MyVector::operator=(const MyVector& vector){
     int *buffer = (int*)realloc(_data, vector._capacity * sizeof(int));
     if(buffer == NULL){
-       throw std::runtime_error("Memmory allocation failed");
+       throw std::runtime_error("Memmory allocation failed. Data hasn't been changed");
     }
     _data = buffer;
     _size = vector._size;
@@ -50,14 +49,14 @@ MyVector& MyVector::operator=(const MyVector& vector){
  }
 
 void  MyVector::set(size_t i, int value){
-    if(i >_size){
+    if(i >=_size){
         throw std::runtime_error("Array index out of bound");
     }
     _data[i] = value;
 }
 
 int MyVector::get(size_t i){
-    if(i >_size){
+    if(i >=_size){
         throw std::runtime_error("Array index out of bound");
     }
      return _data[i];
