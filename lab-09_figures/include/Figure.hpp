@@ -1,5 +1,6 @@
 #pragma once
 
+
 class Figure {
 public:
     Figure(int id, int x, int y);
@@ -10,7 +11,6 @@ public:
     virtual void zoom(int factor) = 0;
     void move(int new_x, int new_y);
     int get_id(); // Верблюжья нотация лучше!
-    // ...
 
 protected:
     int id;

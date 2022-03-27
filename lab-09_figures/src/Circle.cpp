@@ -1,4 +1,3 @@
-#include <math.h>
 #include <cstring>
 #include <stdio.h>
 
@@ -10,6 +9,7 @@ Circle::Circle(int id, int x, int y, int radius, const char *label) : Figure(id,
     this->label = new char[strlen(label) + 1];
     strcpy(this->label, label);
 }
+
 Circle::~Circle(){
     delete [] label;
 }
@@ -17,6 +17,7 @@ Circle::~Circle(){
 void Circle::print() const{
     printf("Circle %d: x = %d y = %d radius = %d label = %s\n", id, x, y, radius, label);
 }
+
 bool Circle::is_inside(int x, int y) const{
     int distance = (this->x - x) * (this->x - x) + (this->y - y) * (this->y - y);
     if(distance <= radius * radius){
@@ -24,6 +25,7 @@ bool Circle::is_inside(int x, int y) const{
     }
     return false;
 }
+
 void Circle::zoom(int factor){
     radius*= factor;
 }

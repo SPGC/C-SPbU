@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Figure.hpp"
-#define figures_ figures
+#define figures_ figures //Зачем это нижнее подчеркивание? 
 
 class Scheme {
 public:
@@ -10,7 +10,6 @@ public:
 
     void push_back_figure(Figure* fg);
     void remove_figure(int id); // элементы смещаются влево
-
     void print_all_figures();
     void zoom_figure(int id, int factor);
     Figure* is_inside_figure(int x, int y); // если внутри нескольких фигур, то возвращается любая из них

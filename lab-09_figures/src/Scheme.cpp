@@ -1,5 +1,3 @@
-#include <stdexcept>
-
 #include "Scheme.hpp"
 
 
@@ -53,7 +51,7 @@ Figure* Scheme::is_inside_figure(int x, int y){
             return figures[i];
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 void Scheme::move(int id, int new_x, int new_y){
