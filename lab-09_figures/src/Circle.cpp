@@ -19,7 +19,7 @@ void Circle::print() const{
 }
 bool Circle::is_inside(int x, int y) const{
     int distance = (this->x - x) * (this->x - x) + (this->y - y) * (this->y - y);
-    if(distance < radius * radius){
+    if(distance <= radius * radius){
         return true;
     }
     return false;
