@@ -7,7 +7,7 @@
 
 Circle::Circle(int id, int x, int y, int radius, const char *label) : Figure(id, x, y){
     this->radius = radius;
-    this->label = new char[strlen(label)];
+    this->label = new char[strlen(label) + 1];
     strcpy(this->label, label);
 }
 Circle::~Circle(){

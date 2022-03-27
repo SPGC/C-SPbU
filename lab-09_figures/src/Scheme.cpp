@@ -17,9 +17,6 @@ Scheme::~Scheme(){
 }
 
 void Scheme::push_back_figure(Figure* fg){
-    if(size == capacity){
-        throw std::runtime_error("Array index out of bounds");
-    }
     figures[size] = fg;
     size++;
 }
@@ -27,7 +24,6 @@ void Scheme::push_back_figure(Figure* fg){
 void Scheme::remove_figure(int id){
     int index = getIndexOfFigure(id);
     if(index == -1){
-        printf("No such index\n");
         return;
     }
     delete figures[index];
@@ -46,7 +42,6 @@ void Scheme::print_all_figures(){
 void Scheme::zoom_figure(int id, int factor){
     int index = getIndexOfFigure(id);
     if(index == -1){
-        printf("No such index\n");
         return;
     }
     figures[index]->zoom(factor);
@@ -58,14 +53,12 @@ Figure* Scheme::is_inside_figure(int x, int y){
             return figures[i];
         }
     }
-    printf("No such figure\n");
     return NULL;
 }
 
 void Scheme::move(int id, int new_x, int new_y){
     int index = getIndexOfFigure(id);
     if(index == -1){
-        printf("No such index\n");
         return;
     }
     figures[index]->move(new_x, new_y);
