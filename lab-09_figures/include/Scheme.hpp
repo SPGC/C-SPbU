@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Figure.hpp"
+#define figures_ figures
 
 class Scheme {
 public:
@@ -16,7 +17,8 @@ public:
     void move(int id, int new_x, int new_y);
 
 private:
-    // ...
-
+    int getIndexOfFigure(int id);
+    int size;
+    int capacity;
     Figure** figures_; // размер массива задается в конструкторе и больше не растет
 };
