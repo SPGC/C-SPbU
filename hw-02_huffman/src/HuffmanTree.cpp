@@ -8,6 +8,7 @@
 HuffmanTree::~HuffmanTree(){
     delete root;
     delete innerVector;
+    delete leaves;
 }
 
 //Private methods

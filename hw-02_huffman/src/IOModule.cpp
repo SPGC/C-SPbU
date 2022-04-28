@@ -32,6 +32,7 @@ void IOModule::writeCodeToFile(map<unsigned char, pair<int, int>> * dict, ofstre
         writeInteger(out, (*i).second.first);
         writeInteger(out, (*i).second.second);
     }   
+    free(outChar);
     archiveSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
     tableSize = size;
 }
@@ -63,6 +64,7 @@ map<pair<int, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
         dict->insert(make_pair(make_pair(code,codeLength),(unsigned char)(*inChar)));
     }
     archiveSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
+    free(inChar);
     return dict;
 }
 
