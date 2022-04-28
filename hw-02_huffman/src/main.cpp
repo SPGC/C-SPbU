@@ -65,9 +65,9 @@ int main(int argn, char **argv){
     free(forFlag);
     if(mode == 'c'){
         result = code(in, out);
-        cout << result.first << "\n" << result.second.first << "\n" << result.second.second << "\n";
+        cout << result.first << "\n" << result.second.first - result.second.second << "\n" << result.second.second << "\n";
     } else {
         result = decode(in, out);
-        cout << result.second.first << "\n" << result.first << "\n" << result.second.second << "\n";
+        cout << result.second.first - result.second.second << "\n" << result.first << "\n" << result.second.second << "\n";
     }
 }
