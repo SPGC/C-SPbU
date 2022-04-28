@@ -1,7 +1,3 @@
-#include <bitset>
-#include <climits>
-#include <iostream>
-
 #include "CoderDecoder.hpp"
 
 
@@ -25,7 +21,7 @@ Decoder::Decoder(map<pair<int, int>, unsigned char> *code){
 
 // Decode
 //  returns:
-//      [value, not used bytes or not fully used bytes, number of previous array, amount of first byte not used bits]
+//      [value, not used bytes or not fully used bytes, amount of not used not fully used bytes, amount of first byte not used bits]
 pair<unsigned char, pair<unsigned char*, pair<int, int>>> Decoder::decode(unsigned char * inputBytes, int firstByteNotUsedBits, int amountsOFBytes){
     int buffer = (inputBytes[0] >> (firstByteNotUsedBits - 1) ) & 1;
     int i = 0;

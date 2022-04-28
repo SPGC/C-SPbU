@@ -1,15 +1,11 @@
-#include <fstream>
-#include <cstdlib>
 #include <algorithm>
-#include <iostream>
-#include <stdexcept>
-#include <bitset>
-#include <climits>
 
 #include "IOModule.hpp"
 
 
 //Private Methods
+
+// Write data as 4 bytes to out
 void IOModule::writeInteger(ofstream *out, int data){
     unsigned char c;
     char *outChar = (char *)malloc(1);
@@ -21,6 +17,7 @@ void IOModule::writeInteger(ofstream *out, int data){
     free(outChar);
 }
 
+// Write code table (dict) to out
 void IOModule::writeCodeToFile(map<unsigned char, pair<int, int>> * dict, ofstream * out){
     int size = dict->size();
     writeInteger(out, fileSize);
@@ -36,6 +33,7 @@ void IOModule::writeCodeToFile(map<unsigned char, pair<int, int>> * dict, ofstre
     tableSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
 }
 
+// Read 4 bytes as integer from in
 int IOModule::readInteger(ifstream * in){
     char *inChar = (char *)malloc(1);
     int result = 0;
@@ -48,6 +46,7 @@ int IOModule::readInteger(ifstream * in){
     return result;
 }
 
+// Read code table from in 
 map<pair<int, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
     fileSize = readInteger(in);
     int size = readInteger(in);
@@ -66,12 +65,7 @@ map<pair<int, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
     return dict;
 }
 
-IOModule::IOModule(/* args */){
-}
-
-IOModule::~IOModule(){
-}
-
+//Public methods
 int IOModule::getTableSize() const{
     return tableSize;
 }
@@ -84,6 +78,7 @@ int IOModule::getArchiveSize() const{
     return archiveSize;
 }
 
+// Read inFile and write its coded version to outFile. dict is used for codding
 void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned char, pair<int, int>> * dict){
     ofstream out(outFile, ios::binary);
     ifstream in(inFile, ios::binary);
@@ -130,6 +125,7 @@ void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned cha
     delete dict;
 }
 
+// Read inFile and write its decoded version to outFile
 void IOModule::codedInDecodedOut(string inFile, string outFile){
     ofstream out(outFile, ios::binary);
     ifstream in(inFile, ios::binary);
@@ -137,6 +133,11 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
         throw FileOpenException();
     }
     map<pair<int, int>, unsigned char> * codeTable = readCodeFromFile(&in);
+    // Для проверки по valgrind (чтобы словарь не состоял из одного элемента)
+    if(codeTable->size() == 1){
+        pair<pair<int,int>, unsigned char> bufferPair = *(codeTable->begin());
+        codeTable->insert(make_pair(make_pair(bufferPair.first.first ^ 1, 1),((int)bufferPair.second + 1) % 255));
+    }
     Decoder decoder(codeTable);
     pair<unsigned char, pair<unsigned char*, pair<int, int>>> decoded;
     int toRead = 4;
@@ -227,7 +228,7 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
     delete codeTable;
 }
 
-//Checked!
+// Create vector of Nodes based on inFile
 vector<Node*> * IOModule::constructNodes(string inFile){
     ifstream in(inFile, ios::binary);
     if (!in.is_open()){

@@ -1,6 +1,6 @@
 #include <string>
 #include <vector>
-#include <map>
+#include <fstream>
 
 #include "Node.hpp"
 #include "CoderDecoder.hpp"
@@ -21,8 +21,6 @@ private:
     int archiveSize;
     int tableSize;
 public:
-    IOModule(/* args */);
-    ~IOModule();
     void decodedInCodedOut(string, string, map<unsigned char, pair<int, int>> *);
     void codedInDecodedOut(string, string);
     vector<Node*> * constructNodes(string);

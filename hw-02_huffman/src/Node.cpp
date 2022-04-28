@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Node.hpp"
 
 
@@ -8,12 +6,6 @@ Node::Node(Node *child0, Node *child1){
     this->child0 = child0;
     this->child1 = child1;
     this->amount = child1->amount + child0->amount;
-    isLeaf = false;
-}
-
-Node::Node(Node * child1){
-    this->child1 = child1;
-    this->amount = child1->amount;
     isLeaf = false;
 }
 

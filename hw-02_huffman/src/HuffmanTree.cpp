@@ -1,5 +1,4 @@
 #include <iterator>
-#include <iostream>
 
 #include "HuffmanTree.hpp"
 
@@ -12,6 +11,8 @@ HuffmanTree::~HuffmanTree(){
 }
 
 //Private methods
+
+// Insert new Node to the vector of node and sort the givven vector
 void HuffmanTree::iNsert(Node *item){
     innerVector->push_back(item);
     int i = innerVector->size() - 2;
@@ -22,6 +23,9 @@ void HuffmanTree::iNsert(Node *item){
     }
 }
 
+// Set codes to nodes that are leafs. 
+// Node *current - first node for setting code
+// Depth - depth of the current node in the Tree (for the begining it's 0)
 void HuffmanTree::setCodes(Node *current, int code, int depth){
     if(depth > (int)sizeof(int) * 8){
         throw IntegerOverflow();
@@ -40,6 +44,8 @@ void HuffmanTree::setCodes(Node *current, int code, int depth){
 }
 
 //Public methods
+
+//Generate tree from Huffman algorithm from given vector of nodes
 void HuffmanTree::generateTree(vector<Node*> *v){
     innerVector = v;
     leaves = new vector<Node *>();
@@ -67,16 +73,9 @@ void HuffmanTree::generateTree(vector<Node*> *v){
         }
         root = innerVector->front();
         innerVector->pop_back();
-    // } else {
-    //     Node *child1 = v->front();
-    //     innerVector->pop_back();
-    //     leaves->push_back(child1);
-    //     root = new Node(child1);
-    //     //leaves->push_back(root);
-    //     cout << "I'm here!\n";
-    // }
 }
 
+//GenerateCode() : returns dict with key - chars, value - pair: (code of the char; length of the code)
 map<unsigned char, pair<int, int>> * HuffmanTree::genereateCode(){
     if (root == nullptr){
         return nullptr;
@@ -86,5 +85,8 @@ map<unsigned char, pair<int, int>> * HuffmanTree::genereateCode(){
     for (size_t i = 0; i < leaves->size(); i++){
         result->insert(make_pair((*leaves)[i]->getValue(), make_pair((*leaves)[i]->getCode(), (*leaves)[i]->getCodeLength())));
     }
+    // if(leaves->size() == 1){
+    //     result->insert(make_pair(((int)((*leaves)[0]->getValue()) + 1) % 255, make_pair((*leaves)[0]->getCode() * 2, (*leaves)[0]->getCodeLength() + 1)));
+    // }
     return result;
 }
