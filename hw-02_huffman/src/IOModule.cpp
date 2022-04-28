@@ -33,8 +33,7 @@ void IOModule::writeCodeToFile(map<unsigned char, pair<int, int>> * dict, ofstre
         writeInteger(out, (*i).second.second);
     }   
     free(outChar);
-    archiveSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
-    tableSize = size;
+    tableSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
 }
 
 int IOModule::readInteger(ifstream * in){
@@ -52,7 +51,7 @@ int IOModule::readInteger(ifstream * in){
 map<pair<int, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
     fileSize = readInteger(in);
     int size = readInteger(in);
-    tableSize = size;
+    tableSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
     char *inChar = (char *)malloc(1);
     int code;
     int codeLength;
@@ -63,7 +62,6 @@ map<pair<int, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
         codeLength = readInteger(in);
         dict->insert(make_pair(make_pair(code,codeLength),(unsigned char)(*inChar)));
     }
-    archiveSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
     free(inChar);
     return dict;
 }
@@ -113,7 +111,6 @@ void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned cha
             if(counter == 8){
                 *outChar = outBuffer;
                 out.write(outChar, 1);
-                archiveSize++;
                 outBuffer = 0;
                 counter = 0;
             }
@@ -124,8 +121,8 @@ void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned cha
         outBuffer = outBuffer << (8 - counter);
         *outChar = outBuffer;
         out.write(outChar, 1);
-        archiveSize++;
     }
+    archiveSize = out.tellp();
     in.close();
     out.close();
     free(outChar);
@@ -148,8 +145,13 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
     char *buffer = (char *)malloc(4);
     unsigned char *toDecode = (unsigned char *)malloc(5);
     char * outChar = (char *)malloc(1);
-    in.read(buffer, 4);
-    archiveSize += 4;
+    archiveSize = in.tellg();
+    for(int i = 0; i < toRead; i++){
+        in.read(buffer + i, 1);
+        if(!in.eof()){
+            archiveSize = in.tellg();
+        }
+    }
     for (int i = 0; i < 4; i++){
         toDecode[i] = buffer[i];
     }
@@ -171,11 +173,14 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
                 toRead = 4 - currentSize;
             }
             if(toRead != 0){
-                in.read(buffer, toRead);
+                for(int i = 0; i < toRead; i++){
+                    in.read(buffer + i, 1);
+                    if(!in.eof()){
+                        archiveSize = in.tellg();
+                    }
+                }
                 if(in.eof()){
                     break;
-                } else {
-                    archiveSize += toRead;
                 }
                 for (int i = currentSize; i < currentSize + toRead; i++){
                     toDecode[i] = buffer[i - currentSize];
@@ -185,11 +190,14 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
         } else {
             toRead = 4;
             firstByteNotUsedBits = 8;
-            in.read(buffer, toRead);
+                for(int i = 0; i < toRead; i++){
+                    in.read(buffer + i, 1);
+                    if(!in.eof()){
+                        archiveSize = in.tellg();
+                    }
+                }
             if(in.eof()){
                 break;
-            } else {
-                archiveSize += toRead;
             }
             currentSize = 4;
             for (int i = 0; i < currentSize; i++){
