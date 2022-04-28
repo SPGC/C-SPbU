@@ -11,9 +11,17 @@ Node::Node(Node *child0, Node *child1){
     isLeaf = false;
 }
 
+Node::Node(Node * child1){
+    this->child1 = child1;
+    this->amount = child1->amount;
+    isLeaf = false;
+}
+
 Node::Node(unsigned char value, int amount){
     this->amount = amount;
     this->value = value;
+    child0 = nullptr;
+    child1 = nullptr;
     isLeaf = true;
 }
 
@@ -53,6 +61,10 @@ int Node::getCode() const{
 
 int Node::getCodeLength() const{
     return codeLength;
+}
+
+void Node::setIsLeaf(bool flag){
+    isLeaf = flag;
 }
 
 void Node::setCodeLength(int length){

@@ -28,3 +28,4 @@ obj/Exception.o: include/Exception.hpp src/Exception.cpp
 clean:
 	rm -r obj
 	rm hw-02_huffman
+	

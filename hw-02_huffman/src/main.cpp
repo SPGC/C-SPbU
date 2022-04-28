@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "IOModule.hpp"
 #include "HuffmanTree.hpp"
@@ -49,6 +50,19 @@ int main(int argn, char **argv){
         }
     }
     pair<int, pair<int, int>> result;
+    ifstream inStream(in);
+    char *forFlag = (char *)malloc(1);
+    inStream.read(forFlag,1);
+    if(inStream.eof()){
+        cout<< 0 << "\n" << 0 << "\n" << 0 << "\n";
+        inStream.close();
+        ofstream outStream(out);
+        outStream.close();
+        free(forFlag);
+        return 0;
+    }
+    inStream.close();
+    free(forFlag);
     if(mode == 'c'){
         result = code(in, out);
         cout << result.first << "\n" << result.second.first << "\n" << result.second.second << "\n";

@@ -13,6 +13,7 @@ private:
     int codeLength;
 public:
     Node(Node *, Node *);
+    Node(Node *);
     Node(unsigned char, int);
     ~Node();
     Node * getChild0() const;
@@ -23,6 +24,7 @@ public:
     int getCode() const;
     int getCodeLength() const;
     void increaseAmount();
+    void setIsLeaf(bool flag);
     void setCodeLength(int);
     void setCode(int);
     void setChild1(Node *);

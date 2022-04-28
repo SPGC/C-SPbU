@@ -13,7 +13,7 @@ class HuffmanTree{
     private:
         Node* root;
         vector<Node*> *innerVector;
-        void insert(Node *);
+        void iNsert(Node *);
         void setCodes(Node *, int, int);
         vector<Node*> *leaves;
     
