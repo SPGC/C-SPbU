@@ -133,17 +133,16 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
         throw FileOpenException();
     }
     map<pair<int, int>, unsigned char> * codeTable = readCodeFromFile(&in);
-    // Для проверки по valgrind (чтобы словарь не состоял из одного элемента)
-    if(codeTable->size() == 1){
-        pair<pair<int,int>, unsigned char> bufferPair = *(codeTable->begin());
-        codeTable->insert(make_pair(make_pair(bufferPair.first.first ^ 1, 1),((int)bufferPair.second + 1) % 255));
-    }
     Decoder decoder(codeTable);
     pair<unsigned char, pair<unsigned char*, pair<int, int>>> decoded;
     int toRead = 4;
     int currentSize = 4;
     int firstByteNotUsedBits = 8;
     char *buffer = (char *)malloc(4);
+    // Для проверки по valgrind (чтобы буффер был хоть чем-то инициализирован)
+    for(int i = 0; i < 4; i++){
+        buffer[i] = 1;
+    }
     unsigned char *toDecode = (unsigned char *)malloc(5);
     char * outChar = (char *)malloc(1);
     archiveSize = in.tellg();
