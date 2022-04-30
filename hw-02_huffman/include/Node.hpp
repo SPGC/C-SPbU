@@ -1,15 +1,17 @@
 #ifndef NODE
 #define NODE
 
-class Node
-{
+#include <stdint.h>
+
+
+class Node{
 private:
     Node* child0;
     Node* child1;
     int amount;
     unsigned char value;
     bool isLeaf;
-    int code;
+    int32_t code;
     int codeLength;
 public:
     Node(Node *, Node *);
@@ -21,12 +23,12 @@ public:
     int getAmount() const;
     unsigned char getValue() const;
     bool getIsLeaf() const;
-    int getCode() const;
+    int32_t getCode() const;
     int getCodeLength() const;
     void increaseAmount();
     void setIsLeaf(bool flag);
     void setCodeLength(int);
-    void setCode(int);
+    void setCode(int32_t);
     void setChild1(Node *);
     void setChild0(Node *);
 };

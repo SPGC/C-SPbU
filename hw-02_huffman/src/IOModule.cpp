@@ -6,11 +6,11 @@
 //Private Methods
 
 // Write data as 4 bytes to out
-void IOModule::writeInteger(ofstream *out, int data){
+void IOModule::writeInteger(ofstream *out, int32_t data){
     unsigned char c;
     char *outChar = (char *)malloc(1);
     for (size_t i = 0; i < sizeof(int); i++){
-        c = (data >> ((sizeof(int) - i - 1) * 8)) % 256;
+        c = (data >> ((sizeof(int32_t) - i - 1) * 8)) % 256;
         *outChar = c;
         out->write(outChar, 1);
     }
@@ -18,26 +18,26 @@ void IOModule::writeInteger(ofstream *out, int data){
 }
 
 // Write code table (dict) to out
-void IOModule::writeCodeToFile(map<unsigned char, pair<int, int>> * dict, ofstream * out){
+void IOModule::writeCodeToFile(map<unsigned char, pair<int32_t, int>> * dict, ofstream * out){
     int size = dict->size();
     writeInteger(out, fileSize);
     writeInteger(out, size);
     char *outChar = (char*) malloc(1);
-    for (map<unsigned char, pair<int, int>>::iterator i = dict->begin(); i != dict->end(); i++){
+    for (map<unsigned char, pair<int32_t, int>>::iterator i = dict->begin(); i != dict->end(); i++){
         *outChar = (*i).first;
         out->write(outChar, 1);
         writeInteger(out, (*i).second.first);
         writeInteger(out, (*i).second.second);
     }   
     free(outChar);
-    tableSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
+    tableSize = 2 * sizeof(int32_t) + size * (2 * sizeof(int32_t) + 1);
 }
 
 // Read 4 bytes as integer from in
-int IOModule::readInteger(ifstream * in){
+int32_t IOModule::readInteger(ifstream * in){
     char *inChar = (char *)malloc(1);
-    int result = 0;
-    for (size_t i = 0; i < sizeof(int); i++){
+    int32_t result = 0;
+    for (size_t i = 0; i < sizeof(int32_t); i++){
         in->read(inChar, 1);
         result = result << 8;
         result |= (unsigned char)(*inChar);
@@ -47,14 +47,14 @@ int IOModule::readInteger(ifstream * in){
 }
 
 // Read code table from in 
-map<pair<int, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
+map<pair<int32_t, int>, unsigned char> * IOModule::readCodeFromFile(ifstream * in){
     fileSize = readInteger(in);
     int size = readInteger(in);
     tableSize = 2 * sizeof(int) + size * (2 * sizeof(int) + 1);
     char *inChar = (char *)malloc(1);
-    int code;
+    int32_t code;
     int codeLength;
-    map<pair<int, int>, unsigned char> *dict = new map<pair<int, int>, unsigned char>();
+    map<pair<int32_t, int>, unsigned char> *dict = new map<pair<int32_t, int>, unsigned char>();
     for (int i = 0; i < size; i++){
         in->read(inChar, 1);
         code = readInteger(in);
@@ -79,7 +79,7 @@ int IOModule::getArchiveSize() const{
 }
 
 // Read inFile and write its coded version to outFile. dict is used for codding
-void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned char, pair<int, int>> * dict){
+void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned char, pair<int32_t, int>> * dict){
     ofstream out(outFile, ios::binary);
     ifstream in(inFile, ios::binary);
     if (!(out.is_open() && in.is_open())){
@@ -89,7 +89,7 @@ void IOModule::decodedInCodedOut(string inFile, string outFile, map<unsigned cha
     char *c = (char *)malloc(1);
     char *outChar = (char *)malloc(1);
     Codder codder(dict);
-    pair<int, int> result;
+    pair<int32_t, int> result;
     unsigned char outBuffer = 0;
     int counter = 0;
     while(true){
@@ -132,9 +132,9 @@ void IOModule::codedInDecodedOut(string inFile, string outFile){
     if (!(out.is_open() && in.is_open())){
         throw FileOpenException();
     }
-    map<pair<int, int>, unsigned char> * codeTable = readCodeFromFile(&in);
+    map<pair<int32_t, int>, unsigned char> * codeTable = readCodeFromFile(&in);
     Decoder decoder(codeTable);
-    pair<unsigned char, pair<unsigned char*, pair<int, int>>> decoded;
+    pair<unsigned char, pair<unsigned char*, pair<int32_t, int>>> decoded;
     int toRead = 4;
     int currentSize = 4;
     int firstByteNotUsedBits = 8;

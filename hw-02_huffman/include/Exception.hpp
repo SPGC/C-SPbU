@@ -1,7 +1,8 @@
-#include <exception>
-
 #ifndef MYEXCEPT
 #define MYEXCEPT
+
+#include <exception>
+
 
 class Exception : public std::exception {};
 

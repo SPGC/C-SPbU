@@ -11,7 +11,7 @@ pair<int, pair<int, int>> code(string in, string out){
     vector<Node *> *v = io.constructNodes(in);
     HuffmanTree tree;
     tree.generateTree(v);
-    map<unsigned char, pair<int, int>> * dict = tree.genereateCode();
+    map<unsigned char, pair<int32_t, int>> * dict = tree.genereateCode();
     io.decodedInCodedOut(in, out, dict);
     return make_pair(io.getFileSize(), make_pair(io.getArchiveSize(), io.getTableSize()));
 }

@@ -26,8 +26,8 @@ void HuffmanTree::iNsert(Node *item){
 // Set codes to nodes that are leafs. 
 // Node *current - first node for setting code
 // Depth - depth of the current node in the Tree (for the begining it's 0)
-void HuffmanTree::setCodes(Node *current, int code, int depth){
-    if(depth > (int)sizeof(int) * 8){
+void HuffmanTree::setCodes(Node *current, int32_t code, int depth){
+    if(depth > (int)sizeof(int32_t) * 8){
         throw IntegerOverflow();
     }
     if(current->getIsLeaf()){
@@ -76,17 +76,14 @@ void HuffmanTree::generateTree(vector<Node*> *v){
 }
 
 //GenerateCode() : returns dict with key - chars, value - pair: (code of the char; length of the code)
-map<unsigned char, pair<int, int>> * HuffmanTree::genereateCode(){
+map<unsigned char, pair<int32_t, int>> * HuffmanTree::genereateCode(){
     if (root == nullptr){
         return nullptr;
     }
     setCodes(root, 0, 0);
-    map<unsigned char, pair<int, int>> *result = new map<unsigned char, pair<int, int>>();
+    map<unsigned char, pair<int32_t, int>> *result = new map<unsigned char, pair<int32_t, int>>();
     for (size_t i = 0; i < leaves->size(); i++){
         result->insert(make_pair((*leaves)[i]->getValue(), make_pair((*leaves)[i]->getCode(), (*leaves)[i]->getCodeLength())));
     }
-    // if(leaves->size() == 1){
-    //     result->insert(make_pair(((int)((*leaves)[0]->getValue()) + 1) % 255, make_pair((*leaves)[0]->getCode() * 2, (*leaves)[0]->getCodeLength() + 1)));
-    // }
     return result;
 }

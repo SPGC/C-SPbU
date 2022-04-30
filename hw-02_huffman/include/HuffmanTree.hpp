@@ -1,11 +1,11 @@
+#ifndef HUFFMANTREE
+#define HUFFMANTREE
+
 #include <vector>
 #include <map>
 
 #include "Node.hpp"
 #include "Exception.hpp"
-
-#ifndef HUFFMANTREE
-#define HUFFMANTREE
 
 using namespace std;
 
@@ -14,12 +14,12 @@ class HuffmanTree{
         Node* root;
         vector<Node*> *innerVector;
         void iNsert(Node *);
-        void setCodes(Node *, int, int);
+        void setCodes(Node *, int32_t, int);
         vector<Node*> *leaves;
     
     public:
         ~HuffmanTree();
         void generateTree(vector<Node*> *);
-        map<unsigned char, pair<int, int>> * genereateCode();
+        map<unsigned char, pair<int32_t, int>> * genereateCode();
 };
 #endif

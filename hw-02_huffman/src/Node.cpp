@@ -47,7 +47,7 @@ bool Node::getIsLeaf() const{
     return isLeaf;
 }
 
-int Node::getCode() const{
+int32_t Node::getCode() const{
     return code;
 }
 
@@ -63,7 +63,7 @@ void Node::setCodeLength(int length){
     codeLength = length;
 }
 
-void Node::setCode(int code){
+void Node::setCode(int32_t code){
     this->code = code;
 }
 

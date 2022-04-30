@@ -4,26 +4,26 @@
 //Codder
 
 // Constructor
-Codder::Codder(map<unsigned char, pair<int, int>> *code){
+Codder::Codder(map<unsigned char, pair<int32_t, int>> *code){
     this->codeTable = code;
 }
 
 // Code
-pair<int, int> Codder::code(unsigned char value){
+pair<int32_t, int> Codder::code(unsigned char value){
     return (*codeTable)[value];
 }
 
 
 //Decoder
-Decoder::Decoder(map<pair<int, int>, unsigned char> *code){
+Decoder::Decoder(map<pair<int32_t, int>, unsigned char> *code){
     this->codeTable = code;
 }
 
 // Decode
 //  returns:
 //      [value, not used bytes or not fully used bytes, amount of not used not fully used bytes, amount of first byte not used bits]
-pair<unsigned char, pair<unsigned char*, pair<int, int>>> Decoder::decode(unsigned char * inputBytes, int firstByteNotUsedBits, int amountsOFBytes){
-    int buffer = (inputBytes[0] >> (firstByteNotUsedBits - 1) ) & 1;
+pair<unsigned char, pair<unsigned char*, pair<int32_t, int>>> Decoder::decode(unsigned char * inputBytes, int firstByteNotUsedBits, int amountsOFBytes){
+    int32_t buffer = (inputBytes[0] >> (firstByteNotUsedBits - 1) ) & 1;
     int i = 0;
     int counter = 1;
     while (true){
