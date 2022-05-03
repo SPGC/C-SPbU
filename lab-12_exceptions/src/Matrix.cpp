@@ -6,9 +6,15 @@ int **Matrix::arrayConstructor(int rows, int collumns) {
         return nullptr;
     }
     int **result = (int **) malloc(rows * sizeof(int*));
+    if(result == nullptr){
+        throw MatrixException("Unable to allocate memory.");
+    }
     int *buffer;
     for(int i = 0; i < rows; i++){
         buffer = (int *)malloc(collumns * sizeof(int));
+        if(buffer == nullptr){
+            throw MatrixException("Unable to allocate memory.");
+        }
         std::fill_n(buffer, collumns, 0);
         result[i] = buffer;
     }
