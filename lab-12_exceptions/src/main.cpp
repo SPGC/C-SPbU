@@ -28,7 +28,7 @@ void mult(std::string firstIndex){
 void elem(std::string index){
     int i, j;
     std::cin >> i >> j;
-    std::cout << matrixes[index[1] - '0'].get(i, j);
+    std::cout << matrixes[index[1] - '0'].get(i, j) << "\n";
 }
 
 void print(std::string index){
